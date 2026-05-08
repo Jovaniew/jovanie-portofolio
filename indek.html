@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio | Jovanie Wijaya</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,700;1,300&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --light-bg: #e9e9e9;
+            --dark-bg: #0b0d09;
+            --teal: #719294;
+            --olive: #505946;
+            --bright-teal: #52848a;
+            --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+ 
+        [data-theme="light"] {
+            --bg: var(--light-bg);
+            --text: var(--dark-bg);
+            --card: rgba(255, 255, 255, 0.5);
+            --border: rgba(113, 146, 148, 0.3);
+        }
+ 
+        [data-theme="dark"] {
+            --bg: var(--dark-bg);
+            --text: var(--light-bg);
+            --card: rgba(80, 89, 70, 0.1);
+            --border: var(--olive);
+        }
+ 
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+ 
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: 'DM Sans', sans-serif;
+            transition: var(--transition);
+            overflow-x: hidden;
+        }
+ 
+        /* ── NAV ── */
+        nav {
+            position: fixed;
+            top: 0; width: 100%;
+            padding: 1.5rem 8%;
+            display: flex; justify-content: space-between;
+            align-items: center; z-index: 1000;
+            background: var(--bg);
+            border-bottom: 1px solid var(--border);
+            transition: var(--transition);
+        }
+ 
+        .nav-logo { font-family: 'Bebas Neue', sans-serif; letter-spacing: 4px; font-size: 1.1rem; }
+ 
+        .nav-links { display: flex; align-items: center; }
+ 
+        .nav-links a {
+            text-decoration: none; color: var(--text);
+            margin-left: 2.5rem; font-size: 0.75rem;
+            text-transform: uppercase; letter-spacing: 2px;
+            opacity: 0.6; transition: 0.3s;
+            position: relative;
+        }
+        .nav-links a::after {
+            content: ''; position: absolute;
+            bottom: -4px; left: 0; width: 0; height: 1px;
+            background: var(--bright-teal); transition: 0.3s;
+        }
+        .nav-links a:hover { opacity: 1; color: var(--bright-teal); }
+        .nav-links a:hover::after { width: 100%; }
+        .nav-links a.active { opacity: 1; color: var(--bright-teal); }
+        .nav-links a.active::after { width: 100%; }
+ 
+        .theme-toggle {
+            cursor: pointer; font-size: 1.1rem;
+            margin-left: 3rem; color: var(--bright-teal); transition: 0.3s;
+        }
+        .theme-toggle:hover { opacity: 0.7; }
+ 
+        /* ── HERO ── */
+        .hero {
+            height: 100vh;
+            display: flex; align-items: center;
+            padding: 0 8%; gap: 4rem;
+            opacity: 0; animation: fadeUp 0.9s 0.1s forwards;
+        }
+        .hero-text { flex: 1; }
+        .hero-text .eyebrow {
+            letter-spacing: 5px; margin-bottom: 1rem;
+            color: var(--teal); font-size: 0.8rem; font-weight: 300;
+            opacity: 0; animation: fadeUp 0.7s 0.3s forwards;
+        }
+        .hero-text h1 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 5.5rem; line-height: 1;
+            margin-bottom: 1.5rem; letter-spacing: 2px;
+            opacity: 0; animation: fadeUp 0.7s 0.45s forwards;
+        }
+        .hero-text .bio {
+            font-size: 1rem; color: var(--teal); font-weight: 300;
+            margin-bottom: 2rem; max-width: 480px; line-height: 1.8;
+            opacity: 0; animation: fadeUp 0.7s 0.6s forwards;
+        }
+        .hero-ctas {
+            display: flex; gap: 2.5rem; margin-top: 3rem;
+            opacity: 0; animation: fadeUp 0.7s 0.75s forwards;
+        }
+        .hero-ctas a { text-decoration: none; font-size: 0.8rem; letter-spacing: 1.5px; font-weight: 700; text-transform: uppercase; }
+        .hero-ctas .cta-primary { color: var(--bright-teal); }
+        .hero-ctas .cta-secondary { color: var(--text); opacity: 0.6; transition: 0.3s; }
+        .hero-ctas .cta-secondary:hover { opacity: 1; }
+ 
+        .profile-container { flex: 0.7; display: flex; justify-content: flex-end; }
+        .profile-img {
+            width: 320px; height: 420px; object-fit: cover;
+            border-radius: 2px; filter: grayscale(100%);
+            transition: var(--transition); border: 1px solid var(--teal);
+            opacity: 0; animation: fadeUp 0.7s 0.5s forwards;
+        }
+        .profile-img:hover { filter: grayscale(0%); }
+ 
+        /* ── KEYFRAMES ── */
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(24px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+ 
+        /* ── SECTION BASE ── */
+        section {
+            padding: 8rem 8% 4rem;
+            border-bottom: 1px solid var(--border);
+        }
+ 
+        .section-label {
+            font-size: 0.65rem; letter-spacing: 3px;
+            color: var(--teal); margin-bottom: 1rem;
+            text-transform: uppercase;
+        }
+ 
+        h2 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 3.5rem; margin-bottom: 3.5rem;
+            letter-spacing: 1px;
+        }
+ 
+        /* ── REVEAL ON SCROLL ── */
+        .reveal {
+            opacity: 0; transform: translateY(30px);
+            transition: opacity 0.7s ease, transform 0.7s ease;
+        }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+ 
+        /* ── EDUCATION & EXPERIENCE ── */
+        .entry {
+            display: grid; grid-template-columns: 1fr 2fr;
+            margin-bottom: 4rem; gap: 1rem;
+        }
+        .entry-date { color: var(--teal); font-weight: 700; font-size: 0.8rem; letter-spacing: 1px; padding-top: 0.35rem; }
+        .entry-content h3 { font-size: 1.6rem; margin-bottom: 0.8rem; font-weight: 700; }
+        .entry-content p { line-height: 1.8; opacity: 0.75; font-size: 0.95rem; }
+ 
+        /* ── SKILLS ── */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 3rem;
+        }
+        .skill-cat h4 {
+            color: var(--bright-teal); margin-bottom: 1.5rem;
+            text-transform: uppercase; border-bottom: 1px solid var(--teal);
+            padding-bottom: 0.5rem; font-size: 0.75rem; letter-spacing: 2px;
+        }
+        .skill-list { list-style: none; }
+        .skill-list li { margin-bottom: 0.8rem; opacity: 0.75; font-size: 0.9rem; }
+ 
+        /* ── PROJECTS ── */
+        .project-card {
+            margin-bottom: 6rem;
+            display: grid; grid-template-columns: 1fr 1fr;
+            gap: 4rem; align-items: center;
+        }
+        .project-img-box {
+            height: 350px;
+            background: var(--olive); overflow: hidden;
+            border-radius: 2px; border: 1px solid var(--border);
+        }
+        .project-img-box img {
+            width: 100%; height: 100%; object-fit: cover;
+            opacity: 0.6; transition: 0.6s;
+        }
+        .project-card:hover img { opacity: 1; transform: scale(1.03); }
+        .project-meta p { color: var(--teal); font-size: 0.7rem; letter-spacing: 2px; text-transform: uppercase; }
+        .project-meta h3 { font-size: 2rem; margin: 0.8rem 0; font-family: 'Bebas Neue', sans-serif; letter-spacing: 1px; }
+        .project-meta ul {
+            list-style: none; margin-bottom: 1.5rem;
+        }
+        .project-meta ul li {
+            opacity: 0.75; font-size: 0.9rem; line-height: 1.8;
+            padding-left: 1rem; position: relative;
+        }
+        .project-meta ul li::before {
+            content: '—'; position: absolute; left: 0;
+            color: var(--teal); font-size: 0.8rem;
+        }
+        .project-link {
+            display: inline-block; margin-bottom: 1.5rem;
+            color: var(--bright-teal); text-decoration: none;
+            font-size: 0.8rem; font-weight: 700; letter-spacing: 1px;
+            transition: 0.3s;
+        }
+        .project-link:hover { opacity: 0.7; }
+        .project-tag {
+            border: 1px solid var(--teal); padding: 6px 14px;
+            font-size: 0.65rem; letter-spacing: 2px; text-transform: uppercase;
+        }
+ 
+        /* ── CONTACT ── */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1rem;
+        }
+        .contact-card {
+            background: var(--card); border: 1px solid var(--border);
+            padding: 3rem 2rem; text-align: center;
+            text-decoration: none; color: var(--text); transition: 0.3s;
+        }
+        .contact-card:hover { border-color: var(--bright-teal); background: rgba(113,146,148,0.05); }
+        .contact-card i { font-size: 1.5rem; color: var(--bright-teal); margin-bottom: 1.5rem; }
+        .contact-card p { font-size: 0.95rem; font-weight: 600; }
+        .card-label {
+            font-size: 0.65rem; text-transform: uppercase;
+            color: var(--teal); letter-spacing: 2px;
+            display: block; margin-top: 1rem;
+        }
+ 
+        /* ── FOOTER ── */
+        footer {
+            padding: 2.5rem 8%;
+            display: flex; justify-content: space-between; align-items: center;
+            font-size: 0.75rem; opacity: 0.4; letter-spacing: 1px;
+        }
+ 
+        /* ── RESPONSIVE ── */
+        @media (max-width: 968px) {
+            .hero { flex-direction: column-reverse; text-align: center; height: auto; padding-top: 10rem; padding-bottom: 4rem; }
+            .hero-text h1 { font-size: 3.5rem; }
+            .hero-text .bio { margin: 0 auto 1.5rem; }
+            .hero-ctas { justify-content: center; }
+            .profile-container { justify-content: center; }
+            .profile-img { width: 260px; height: 340px; }
+            .entry { grid-template-columns: 1fr; gap: 0.25rem; }
+            .entry-date { font-size: 0.75rem; }
+            .project-card { grid-template-columns: 1fr; gap: 2rem; }
+            .project-card[style*="rtl"] { direction: ltr; }
+            .theme-toggle { margin-left: 1.5rem; }
+            .nav-links a { margin-left: 1.2rem; }
+            h2 { font-size: 2.5rem; }
+        }
+ 
+        @media (max-width: 600px) {
+            nav { padding: 1rem 5%; }
+            .nav-links a { display: none; }
+            .nav-links a:last-of-type { display: none; }
+            .theme-toggle { margin-left: 1rem; }
+            section { padding: 6rem 5% 3rem; }
+            .hero { padding: 0 5%; padding-top: 8rem; }
+        }
+    </style>
+</head>
+<body data-theme="dark">
+ 
+    <nav id="navbar">
+        <div class="nav-logo">Portfolio</div>
+        <div class="nav-links">
+            <a href="#edu">Education</a>
+            <a href="#skills">Skills</a>
+            <a href="#experience">Experience</a>
+            <a href="#projects">Projects</a>
+            <a href="#contact">Contact</a>
+            <span class="theme-toggle" id="theme-btn"><i class="fas fa-sun"></i></span>
+        </div>
+    </nav>
+ 
+    <!-- ── HERO ── -->
+    <header class="hero" id="hero">
+        <div class="hero-text">
+            <p class="eyebrow">Binus University — Computer Science</p>
+            <h1>Jovanie<br>Wijaya</h1>
+            <p class="bio">I'm a Computer Science student at Bina Nusantara University with a strong interest in digital business, financial technology, and business strategy. Skilled in UI/UX design, digital campaign management, and public relations, with interdisciplinary exposure to e-business, finance, AI, and branding through electives and international exchange at National Chi Nan University, Taiwan.</p>
+            <div class="hero-ctas">
+                <a href="#contact" class="cta-primary">Connect →</a>
+                <a href="#projects" class="cta-secondary">View Projects</a>
+            </div>
+        </div>
+        <div class="profile-container">
+            <img src="images/Jovanie Wijaya.JPEG" alt="Jovanie Wijaya" class="profile-img">
+        </div>
+    </header>
+ 
+    <!-- ── EDUCATION ── -->
+    <section id="edu">
+        <p class="section-label reveal">01 — Academic Record</p>
+        <h2 class="reveal">Education</h2>
+ 
+        <div class="entry reveal">
+            <div class="entry-date">2023 — 2027</div>
+            <div class="entry-content">
+                <h3>Bina Nusantara University (BINUS)</h3>
+                <p>Bachelor of Computer Science. GPA: 3.19.</p>
+            </div>
+        </div>
+ 
+        <div class="entry reveal">
+            <div class="entry-date">2026</div>
+            <div class="entry-content">
+                <h3>National Chi Nan University (NCNU) — Taiwan</h3>
+                <p>Selected for an international semester exchange program. Gained global academic exposure and developed adaptability, independence, and cross-cultural communication skills in a diverse learning environment.</p>
+            </div>
+        </div>
+ 
+    </section>
+ 
+    <!-- ── SKILLS ── -->
+    <section id="skills">
+        <p class="section-label reveal">02 — Competence Matrix</p>
+        <h2 class="reveal">Skills</h2>
+        <div class="skills-grid">
+            <div class="skill-cat reveal">
+                <h4>Technical</h4>
+                <ul class="skill-list">
+                    <li>Basic HTML &amp; CSS</li>
+                    <li>Basic Programming</li>
+                    <li>Data Interpretation</li>
+                    <li>Web Development Fundamentals</li>
+                </ul>
+            </div>
+            <div class="skill-cat reveal">
+                <h4>Business &amp; Communication</h4>
+                <ul class="skill-list">
+                    <li>Digital Marketing Strategy</li>
+                    <li>Content Creation &amp; PR</li>
+                    <li>Leadership</li>
+                    <li>Problem Solving</li>
+                </ul>
+            </div>
+            <div class="skill-cat reveal">
+                <h4>Tools &amp; Platforms</h4>
+                <ul class="skill-list">
+                    <li>VS Code</li>
+                    <li>Figma &amp; Canva</li>
+                    <li>Microsoft Excel</li>
+                    <li>Google Workspace</li>
+                </ul>
+            </div>
+            <div class="skill-cat reveal">
+                <h4>Languages</h4>
+                <ul class="skill-list">
+                    <li>English (IELTS 6.5)</li>
+                    <li>Mandarin Chinese (Basic)</li>
+                    <li>Bahasa Indonesia (Native)</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+ 
+    <!-- ── EXPERIENCE ── -->
+    <section id="experience">
+        <p class="section-label reveal">03 — Experience</p>
+        <h2 class="reveal">Experience</h2>
+ 
+        <div class="entry reveal">
+            <div class="entry-date">Feb 2025 — Present</div>
+            <div class="entry-content">
+                <h3>BINUS English Club (BNEC) — Public Relations Officer</h3>
+                <p>Developed and published social media content for promotional campaigns, contributing to increased audience engagement. Collaborated with team members to execute branding strategies and ensure consistent communication across platforms. Also supported event execution including setup, flow management, and participant coordination.</p>
+            </div>
+        </div>
+ 
+        <div class="entry reveal">
+            <div class="entry-date">May 2025 — Sep 2025</div>
+            <div class="entry-content">
+                <h3>BNEC — Secretary / Treasurer, New Member Recruitment</h3>
+                <p>Managed budgeting and financial records for recruitment events across multiple BINUS campuses (Alam Sutera, Bekasi, and Kemanggisan), ensuring accuracy and transparency in financial reporting. Handled booth activities, promoted the organization, and engaged directly with prospective members through interactive activities.</p>
+            </div>
+        </div>
+ 
+        <div class="entry reveal">
+            <div class="entry-date">Additional</div>
+            <div class="entry-content">
+                <h3>Event Staff</h3>
+                <p>Supported end-to-end event execution including setup, coordination, and participant management. Worked in cross-functional teams to ensure smooth operations and deliver a positive event experience.</p>
+            </div>
+        </div>
+ 
+        <div class="entry reveal">
+            <div class="entry-date">Volunteer</div>
+            <div class="entry-content">
+                <h3>Liaison Officer, MC Division — NEO 2024</h3>
+                <p>Volunteered as a Liaison Officer in the MC division, responsible for delivering storytelling segments and guiding event flow during live sessions. Engaged audiences, ensured smooth transitions between program segments, and collaborated with the organizing team to maintain overall event coordination.</p>
+            </div>
+        </div>
+    </section>
+ 
+    <!-- ── PROJECTS ── -->
+    <section id="projects">
+        <p class="section-label reveal">04 — Featured Work</p>
+        <h2 class="reveal">Projects</h2>
+ 
+        <!-- GuardIN -->
+        <div class="project-card reveal" style="direction: rtl;">
+            <div class="project-img-box" style="direction: ltr;">
+                <img src="images/se.jpg" alt="GuardIN — Personal Security Service Platform">
+            </div>
+            <div class="project-meta" style="direction: ltr;">
+                <p>Personal Security Service Platform</p>
+                <h3>GuardIN</h3>
+                <ul>
+                    <li>System Designer responsible for use case diagrams, flowcharts, backlog, and test cases.</li>
+                    <li>Contributed to platform design for booking and tracking features.</li>
+                </ul>
+                <a href="https://www.figma.com/design/1qtEY46WpnlkkvIlpyeAVn/AOL-SE---Kelompok-3?m=auto&t=KrCWDHbXsSQI86y2-6" target="_blank" rel="noopener" class="project-link"> <span class="project-tag">View Project</span></a><br>
+                <a href="https://github.com/Jovaniew/SE-AOL-kelompok-3" target="_blank" rel="noopener" class="project-link"> <span class="project-tag">github</span></a><br>
+            </div>
+        </div>
+ 
+        <!-- Beetor -->
+        <div class="project-card reveal">
+            <div class="project-img-box">
+                <img src="images/beetor.jpg" alt="Beetor — Tutoring Marketplace Platform">
+            </div>
+            <div class="project-meta">
+                <p>Tutoring Marketplace Platform</p>
+                <h3>Beetor</h3>
+                <ul>
+                    <li>UI/UX Designer — designed user interface and experience using Figma.</li>
+                    <li>Conducted user research and created wireframes and prototypes.</li>
+                    <li>Applied Activity-Centered Design (ACD) to improve usability.</li>
+                </ul>
+                <a href="https://www.figma.com/design/bxIT3Pr49zKZNbq7EmtWrW/AOL?m=auto&t=KrCWDHbXsSQI86y2-1" target="_blank" rel="noopener" class="project-link"> <span class="project-tag">View Project</span></a><br>
+            </div>
+        </div>
+ 
+        <!-- Soluva -->
+        <div class="project-card reveal" style="direction: rtl;">
+            <div class="project-img-box" style="direction: ltr;">
+                <img src="images/soluva.jpg" alt="Soluva — Household Maintenance Service Platform">
+            </div>
+            <div class="project-meta" style="direction: ltr;">
+                <p>Household Maintenance Service Platform</p>
+                <h3>Soluva</h3>
+                <ul>
+                    <li>Product / UX Designer — designed user flows and service structure for technician marketplace.</li>
+                    <li>Improved service transparency through workflow and verification design.</li>
+                </ul>
+            
+                <a href="https://www.figma.com/design/https://www.figma.com/design/a47RADgvGzxv4Zrjg3uLwo/PIKKE---Build-Your-Home?node-id=0-1&t=VPGK2s3Z5z3LkTrm-1" target="_blank" rel="noopener" class="project-link"> <span class="project-tag">View Project</span></a><br>
+            </div>
+        </div>
+ 
+        <!-- HappyPaw — fixed link -->
+        <div class="project-card reveal">
+            <div class="project-img-box">
+                <img src="images/happypaw.jpg" alt="HappyPaw — Pet Care Management App">
+            </div>
+            <div class="project-meta">
+                <p>Pet Care Management Android Application</p>
+                <h3>HappyPaw</h3>
+                <ul>
+                    <li>Designed user interface and user experience for a pet care management</li>
+                    <li>Designed features including reminders, tracking, pet profile diary, and quick-action logging.</li>
+                </ul>
+                <a href="https://www.figma.com/design/9D8NzVhArtzMPucmwZFpQx/HappyPaw?m=auto&t=e5A5oBKQSY7ghygV-1" target="_blank" rel="noopener" class="project-link"> <span class="project-tag">View Project</span></a><br>
+
+            </div>
+        </div>
+    </section>
+ 
+    <!-- ── CONTACT ── -->
+    <section id="contact">
+        <p class="section-label reveal">05 — Get in Touch</p>
+        <h2 class="reveal">Contact</h2>
+        <div class="contact-grid">
+            <a href="cv/Jovanie Wijaya_CV.pdf" download class="contact-card reveal">
+                <i class="fas fa-file-pdf"></i>
+                <p>Full Résumé</p>
+                <span class="card-label">Download PDF</span>
+            </a>
+            <a href="https://www.linkedin.com/in/jovanie-wijaya/" target="_blank" rel="noopener" class="contact-card reveal">
+                <i class="fab fa-linkedin-in"></i>
+                <p>LinkedIn</p>
+                <span class="card-label">View Profile</span>
+            </a>
+            <a href="mailto:jovanie.wijaya@binus.ac.id" class="contact-card reveal">
+                <i class="far fa-envelope"></i>
+                <p>Email Me</p>
+                <span class="card-label">Send Message</span>
+            </a>
+        </div>
+    </section>
+ 
+    <!-- ── FOOTER ── -->
+    <footer>
+        <span>© 2026 Jovanie Wijaya</span>
+        <span>Computer Science · BINUS University</span>
+    </footer>
+ 
+    <script>
+        /* ── Theme toggle ── */
+        const themeBtn = document.getElementById('theme-btn');
+        const body = document.body;
+ 
+        themeBtn.addEventListener('click', () => {
+            const isDark = body.getAttribute('data-theme') === 'dark';
+            body.setAttribute('data-theme', isDark ? 'light' : 'dark');
+            themeBtn.innerHTML = isDark ? '<i class="fas fa-moon"></i>' : '<i class="fas fa-sun"></i>';
+        });
+ 
+        /* ── Active nav link on scroll ── */
+        const sections = document.querySelectorAll('section[id], header[id]');
+        const navLinks = document.querySelectorAll('.nav-links a');
+ 
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    navLinks.forEach(link => {
+                        link.classList.toggle('active', link.getAttribute('href') === '#' + entry.target.id);
+                    });
+                }
+            });
+        }, { threshold: 0.4 });
+ 
+        sections.forEach(s => observer.observe(s));
+ 
+        /* ── Scroll reveal ── */
+        const revealEls = document.querySelectorAll('.reveal');
+ 
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    revealObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.15 });
+ 
+        revealEls.forEach(el => revealObserver.observe(el));
+    </script>
+</body>
+</html>
